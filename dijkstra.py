@@ -1,25 +1,3 @@
-# Graph exemples
-"""
-    {
-        'A': {'B': 6, 'D': 1},
-        'B': {'A': 6, 'C': 5, 'D': 2, 'E': 2},
-        'C': {'B': 5, 'E': 5},
-        'D': {'A': 1, 'B': 2, 'E': 1},
-        'E': {'C': 5, 'D': 1}
-}
-
-    {
-    'U': {'V': 2, 'W': 5, 'X': 1},
-    'V': {'U': 2, 'X': 2, 'W': 3},
-    'W': {'V': 3, 'U': 5, 'X': 3, 'Y': 1, 'Z': 5},
-    'X': {'U': 1, 'V': 2, 'W': 3, 'Y': 1},
-    'Y': {'X': 1, 'W': 1, 'Z': 1},
-    'Z': {'W': 5, 'Y': 1},
-}
-
-"""
-
-
 class Heap:
     def __init__(self, heap_list):
         self.heap = heap_list
@@ -108,4 +86,3 @@ example_graph = {
     'Z': {'W': 5, 'Y': 1},
 }
 
-print(dijkstra(example_graph, 'X'))
