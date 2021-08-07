@@ -48,11 +48,13 @@ while True:
   
                 # get text input from 0 to -1 i.e. end.
                 user_text = user_text[:-1]
+                print(user_text)
   
             # Unicode standard is used for string
             # formation
             else:
                 user_text += event.unicode
+                print(user_text)
       
     # it will set background color of screen
     screen.fill((0, 0, 0))
