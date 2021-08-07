@@ -1,6 +1,7 @@
 import pygame
 import sys
 import button
+from dijkstra import dijkstra
 
 pygame.init()
 
@@ -26,10 +27,13 @@ def home_screen(surface, searched, result):
 
   ship = pygame.image.load('assets/ship.png')
   ship = pygame.transform.scale(ship,(358,358))
+
   arrow_partida = pygame.transform.scale(arrow_partida, (20, 20))
   arrow_destino = pygame.transform.scale(arrow_destino, (20, 20))
+  arrow_destino = pygame.transform.rotate(arrow_destino, 90)
   back_arrow_partida = pygame.transform.scale(back_arrow_partida, (20, 20))
   back_arrow_destino = pygame.transform.scale(back_arrow_destino, (20, 20))
+  back_arrow_destino = pygame.transform.rotate(back_arrow_destino, 90)
 
   if not searched:
     title_text = title_font.render('Encontre o melhor roteiro para seu navio', 1, (255, 194, 41))
@@ -40,31 +44,30 @@ def home_screen(surface, searched, result):
     surface.blit(arrow_destino, (920, 100))
     surface.blit(ship, (714, 439))
     surface.blit(title_text, (500, 327))
+    surface.blit(title_text, (500, 327))
   else:
+    
     title_font = pygame.font.SysFont('Josefin Sans', 64)
-    title_text = title_font.render('O melhor roteiro para seu navio é:', 1, (255, 194, 41))
+    title_text = title_font.render('O menor roteiro para seu navio tem:', 1, (255, 194, 41))
+    pygame.draw.rect(surface, (13, 59, 102), (0, 300, 1777, 900))
 
-    for i in range(len(result)):
-      print(f'{i}: {result[i]}')
+    if str(result) == 'inf':
+      result_text = title_font.render('Infelizmente não é possível fazer essa rota', 1, (255, 194, 41))
+    else:
+      result_text = title_font.render(str(result), 1, (255, 194, 41))
+
+    surface.blit(title_text, (500, 327))
+    surface.blit(result_text, (500, 427))
+
+    print(result)
+
+    
     pygame.display.update()
-
-
-  surface.blit(title_text, (500, 327))
 
   pygame.display.update()
 
-# def result_screen(surface, result: list):
-#   title_font = pygame.font.SysFont('Josefin Sans', 64)
-#   title_text = title_font.render('O melhor roteiro para seu navio é:', 1, (255, 194, 41))
 
-#   for i in result:
-#     print(f'{i}: {result}')
-
-
-#   surface.blit(title_text, (500, 327))
-
-
-def background(surface):
+def background(surface, partida_index, destino_index):
   global search_button
   global button_label
 
@@ -75,12 +78,9 @@ def background(surface):
   btn_img = pygame.image.load('assets/button.png').convert_alpha()
   search_button = button.Button(1400, 90, btn_img, 1)
 
-  partida_index = 0
-  destino_index = -1
-
-  label_text = label_font.render(vertices[partida_index], 1, (0, 0, 0))
-  label_text2 = label_font.render(vertices[destino_index], 1, (0, 0, 0))
-  button_label = label_font.render('ENTER para ir!', 1, (255, 255, 255))
+  label_text = label_font.render(vertices[partida_index % len(vertices)], 1, (0, 0, 0))
+  label_text2 = label_font.render(vertices[destino_index % len(vertices)], 1, (0, 0, 0))
+  button_label = label_font.render('Todos a bordo!', 1, (255, 255, 255))
 
   pygame.draw.rect(surface, (244, 211, 94), (0, 0, 1777, 235))
   
@@ -92,20 +92,20 @@ def background(surface):
 
 def system():
   searched = False
-  background(surface)
-  # home_screen(surface,searched, [])
   partida_index = 0
-
+  destino_index = -1
+  background(surface, partida_index, destino_index)
+  home_screen(surface,searched, [1,2,3])
   
   while True:
   
     if search_button.draw(surface):
       searched = True
-      home_screen(surface,searched, [1,2,3])
+      result = dijkstra(vertices[partida_index])
+      home_screen(surface,searched, result[vertices[destino_index]])
     
-    else:
+    if not searched:
       home_screen(surface,searched, [1,2,3])
-
 
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
@@ -114,14 +114,17 @@ def system():
       
       if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_LEFT:
-          print('esquerda')
+          partida_index -= 1
+          background(surface, partida_index, destino_index)
         elif event.key == pygame.K_RIGHT:
           partida_index += 1
-          print(partida_index)
+          background(surface, partida_index, destino_index)
         elif event.key == pygame.K_UP:
-          print('cima')
+          destino_index -= 1
+          background(surface, partida_index, destino_index)
         elif event.key == pygame.K_DOWN:
-          print('baixo')    
+          destino_index += 1
+          background(surface, partida_index, destino_index)
     surface.blit(button_label, (1460,120))
 
     pygame.display.update()
