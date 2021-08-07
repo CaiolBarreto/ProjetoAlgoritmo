@@ -1,0 +1,168 @@
+Screen:
+    id: screen1
+    NavigationLayout:
+        id: navigation
+        ScreenManager:
+            id: screen_manager
+            Screen:
+                id: check
+                name: 'check'
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Menu"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state()]]
+                    Widget:
+                MDLabel:
+                    text: "Descubra a melhor rota para o seu navio!"
+                    font_size: 28
+                    font_name: "MontserratBold"
+                    pos_hint: {'center_x': 0.62, 'center_y': 0.75}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+                MDTextField:
+                    id: input_box_1
+                    hint_text: "Ponto de partida"
+                    font_size: 18
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.58}
+                    size_hint_x: None
+                    width: 500
+                    multiline: True
+                    helper_text: "Digite seu ponto de partida"
+                    helper_text_mode: "on_focus"
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+                    line_color_normal: (13/255, 59/255, 102/255, 1)
+
+                MDTextField:
+                    id: input_box_2
+                    hint_text: "Destino final"
+                    font_size: 18
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.40}
+                    size_hint_x: None
+                    width: 500
+                    multiline: True
+                    helper_text: "Digite seu destino final"
+                    helper_text_mode: "on_focus"
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+                    line_color_normal: (13/255, 59/255, 102/255, 1)
+
+                MDRectangleFlatButton:
+                    text: "Todos a bordo!"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.25}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+                    on_press: app.press()
+
+                MDLabel:
+                    markup: True
+                    text: "<Developed by: [color=#363636]Caio Barreto and Sofia Diniz[/color]>"
+                    font_name: "Montserrat"
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+                    pos_hint: {'center_x': 0.78, 'center_y': 0.1}
+            Screen:
+                name: 'relatorio'
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Menu"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state()]]
+
+                    Widget:
+                MDLabel:
+                    text: "Relátorio do projeto"
+                    font_size: 40
+                    font_name: "MontserratBold"
+                    pos_hint: {'center_x': 0.725, 'center_y': 0.75}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+                MDLabel:
+                    text: "Acesse o relatório do projeto apertando no botão abaixo:"
+                    font_size: 20
+                    pos_hint: {'center_x': 0.67, 'center_y': 0.60}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+                MDRectangleFlatButton:
+                    text: "Acesse"
+                    pos_hint: {'center_x': 0.5, 'center_y': 0.45}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+                    on_press: app.access()
+
+            Screen:
+                name: 'instrucoes'
+                BoxLayout:
+                    orientation: 'vertical'
+                    MDToolbar:
+                        title: "Menu"
+                        elevation: 10
+                        left_action_items: [['menu', lambda x: nav_drawer.set_state()]]
+                    Widget:
+                MDLabel:
+                    text: "Instruções"
+                    font_size: 56
+                    font_name: "MontserratBold"
+                    pos_hint: {'center_x': 0.8, 'center_y': 0.75}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+                MDLabel:
+                    text: "1. Acesse o arquivo avaliable_vertices.txt na pasta do algoritmo"
+                    font_size: 20
+                    pos_hint: {'center_x': 0.67, 'center_y': 0.60}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+                MDLabel:
+                    text: "2. Escolha um ponto de partida e outro de chegada"
+                    font_size: 20
+                    pos_hint: {'center_x': 0.67, 'center_y': 0.55}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+                MDLabel:
+                    text: "3. Cole nos respectivos inputs"
+                    font_size: 20
+                    pos_hint: {'center_x': 0.67, 'center_y': 0.5}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+                MDLabel:
+                    text: "4. E boa viagem! :)"
+                    font_size: 20
+                    pos_hint: {'center_x': 0.67, 'center_y': 0.45}
+                    theme_text_color: "Custom"
+                    text_color: (13/255, 59/255, 102/255, 1)
+
+        MDNavigationDrawer:
+            id: nav_drawer
+            ContentNavigationDrawer:
+                ScrollView:
+                    DrawerList:
+                        id: md_list
+
+                        MDList:
+                            OneLineIconListItem:
+                                text: "Algoritmo"
+                                on_press: screen_manager.current = "check"
+                                IconLeftWidget:
+                                    icon: "home"
+
+                            OneLineIconListItem:
+                                text: "Relatório do projeto"
+                                on_press: screen_manager.current = "relatorio"
+                                IconLeftWidget:
+                                    icon: "clipboard-list"
+
+                            OneLineIconListItem:
+                                text: "Instruções"
+                                on_press: screen_manager.current = "instrucoes"
+                                IconLeftWidget:
+                                    icon: "circle-edit-outline"
