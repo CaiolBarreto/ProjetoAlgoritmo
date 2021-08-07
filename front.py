@@ -70,6 +70,8 @@ def system():
   home_screen(surface)
   
   while True:
+    if search_button.draw(surface):
+      print('FOI')
     for event in pygame.event.get():
       if event.type == pygame.QUIT:
         pygame.quit()
